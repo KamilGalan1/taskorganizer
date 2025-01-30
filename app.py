@@ -276,7 +276,7 @@ def update_task(task_id):
     changes = []
 
     if task.user_id == current_user.id:
-        # Debugowanie edycji właściciela
+        
         print("Editing as owner")
         if task.title != data.get('title', task.title):
             changes.append(f"Title changed from '{task.title}' to '{data['title']}'")
@@ -315,7 +315,7 @@ def update_task(task_id):
 
 
     elif current_user in task.shared_with:
-        # Debugowanie edycji przez użytkownika z udostępnieniem
+       
         print("Editing as shared user")
         if task.completed != data.get('completed', task.completed):
             changes.append(f"Task marked as {'completed' if data['completed'] else 'incomplete'}")
@@ -335,7 +335,7 @@ def update_task(task_id):
 
     db.session.commit()
 
-    # Debugowanie zmian i powiadomień
+    
     print(f"Changes made: {changes}")
     if changes:
         for user in task.shared_with:
@@ -361,31 +361,6 @@ def update_task(task_id):
         'shared_with': [user.username for user in task.shared_with]
     }), 200
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Usuwanie Załącznika
-@app.route('/tasks/<int:task_id>/attachments/<filename>', methods=['DELETE'])
-def delete_attachment(task_id, filename):
-    # Znajdź zadanie po ID
-    task = next((task for task in tasks if task['id'] == task_id), None)
-    if not task:
-        return jsonify({'error': 'Task not found'}), 404
-
-    # Usuń ścieżkę pliku z listy file_paths w zadaniu
-    task['file_paths'] = [path for path in task['file_paths'] if os.path.basename(path) != filename]
-
-    return jsonify({'message': 'Attachment removed from task'}), 200
 
 
 # Przycisk Completed
@@ -414,7 +389,7 @@ def mark_task_complete(task_id):
 def download_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
 
-# Usuwanie zadania wraz z załącznikami
+# Usuwanie zadania 
 @app.route('/tasks/<int:task_id>', methods=['DELETE'])
 @login_required
 def delete_task(task_id):
