@@ -157,15 +157,23 @@ def logout():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
+    error = None
 
     if form.validate_on_submit():
+        existing_user = User.query.filter_by(username=form.username.data).first()
+        if existing_user:
+            form.username.errors.append('Username already in use.')
+            return render_template('register.html', form=form)
+
+
         hashed = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         new_user = User(username=form.username.data, password=hashed)
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('login'))
 
-    return render_template('register.html', form=form)
+
+    return render_template('register.html', form=form,)
 
 
 
@@ -276,7 +284,7 @@ def update_task(task_id):
     changes = []
 
     if task.user_id == current_user.id:
-        
+        # Debugowanie edycji właściciela
         print("Editing as owner")
         if task.title != data.get('title', task.title):
             changes.append(f"Title changed from '{task.title}' to '{data['title']}'")
@@ -315,7 +323,7 @@ def update_task(task_id):
 
 
     elif current_user in task.shared_with:
-       
+        # Debugowanie edycji przez użytkownika z udostępnieniem
         print("Editing as shared user")
         if task.completed != data.get('completed', task.completed):
             changes.append(f"Task marked as {'completed' if data['completed'] else 'incomplete'}")
@@ -335,7 +343,7 @@ def update_task(task_id):
 
     db.session.commit()
 
-    
+    # Debugowanie zmian i powiadomień
     print(f"Changes made: {changes}")
     if changes:
         for user in task.shared_with:
@@ -363,6 +371,31 @@ def update_task(task_id):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+# Usuwanie Załącznika
+@app.route('/tasks/<int:task_id>/attachments/<filename>', methods=['DELETE'])
+def delete_attachment(task_id, filename):
+    # Znajdź zadanie po ID
+    task = next((task for task in tasks if task['id'] == task_id), None)
+    if not task:
+        return jsonify({'error': 'Task not found'}), 404
+
+    # Usuń ścieżkę pliku z listy file_paths w zadaniu
+    task['file_paths'] = [path for path in task['file_paths'] if os.path.basename(path) != filename]
+
+    return jsonify({'message': 'Attachment removed from task'}), 200
+
+
 # Przycisk Completed
 @app.route('/tasks/<int:task_id>/complete', methods=['PATCH'])
 @login_required
@@ -382,7 +415,14 @@ def mark_task_complete(task_id):
 
 
 
-# Usuwanie zadania 
+
+
+# Pobieranie plików
+@app.route('/download/<filename>', methods=['GET'])
+def download_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
+
+
 @app.route('/tasks/<int:task_id>', methods=['DELETE'])
 @login_required
 def delete_task(task_id):
@@ -501,6 +541,24 @@ def get_statistics():
         'high_priority_tasks': high_priority_tasks,
         'completed_tasks': completed_tasks
     }), 200
+
+
+
+
+#TESTYYY
+
+@app.route('/create_test_user')
+def create_test_user():
+    test_user = User.query.filter_by(username="testuser").first()
+    if not test_user:
+        hashed_pw = bcrypt.generate_password_hash("testpassword").decode('utf-8')
+        new_user = User(username="testuser", password=hashed_pw)
+        db.session.add(new_user)
+        db.session.commit()
+        return "Test user created!", 200
+    return "Test user already exists.", 200
+
+
 
 
 
