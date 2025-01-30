@@ -281,7 +281,7 @@ function handleEditFormSubmit(taskId) {
                     description,
                     due_date,
                     priority,
-                    shared_with: sharedUsers.join(',') // Lista użytkowników
+                    shared_with: sharedUsers.join(',') 
                 })
             });
 
@@ -314,7 +314,7 @@ function handleEditFormSubmit(taskId) {
 document.querySelectorAll('.filter-button').forEach(button => {
     button.addEventListener('click', () => {
         const filterType = button.getAttribute('data-filter');
-        loadFilteredTasks(filterType); // Załaduj odpowiednie dane dla filtra
+        loadFilteredTasks(filterType); 
     });
 });
 
@@ -337,22 +337,21 @@ async function loadFilteredTasks(filterType) {
 
 document.querySelectorAll('.filter-button').forEach(button => {
     button.addEventListener('click', function () {
-        // Usuń klasę 'active' z wszystkich przycisków
+        
         document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
 
-        // Dodaj klasę 'active' do klikniętego przycisku
+        
         this.classList.add('active');
 
-        // Załaduj dane dla wybranego filtra (np. przez fetch API)
+       
         const filterType = this.getAttribute('data-filter');
         loadFilteredTasks(filterType);
     });
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    const defaultFilter = 'all'; // Domyślny filtr
-
-    // Ustaw aktywny filtr
+    const defaultFilter = 'all'; 
+   
     document.querySelectorAll('.filter-button').forEach(button => {
         button.classList.remove('active');
         if (button.getAttribute('data-filter') === defaultFilter) {
@@ -360,10 +359,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Załaduj dane dla domyślnego filtra
     loadFilteredTasks(defaultFilter);
 
-    // Inicjalizuj inne funkcje
+   
     loadTasks();
     loadStatistics();
     fetchNotifications();
