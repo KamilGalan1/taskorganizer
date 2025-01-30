@@ -382,13 +382,6 @@ def mark_task_complete(task_id):
 
 
 
-
-
-# Pobieranie plików
-@app.route('/download/<filename>', methods=['GET'])
-def download_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
-
 # Usuwanie zadania 
 @app.route('/tasks/<int:task_id>', methods=['DELETE'])
 @login_required
