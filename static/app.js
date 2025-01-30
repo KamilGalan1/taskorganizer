@@ -459,37 +459,37 @@ let calendar;
                 failureCallback(error);
             }
         },
-        dayMaxEvents: 1, // Wyświetlaj maksymalnie 1 wydarzenie na dzień
+        dayMaxEvents: 1, //  maksymalnie 1 wydarzenie na dzień
 
 
         moreLinkContent: function(args) {
-            return `Zobacz jeszcze... ${args.num} tasków`; // Dynamiczny tekst przycisku "more"
+            return `Zobacz jeszcze... ${args.num} tasków`; //  przycisk "zobacz jeszcze"
         },
         moreLinkClick: function(info) {
-            // Pobierz datę i ustaw w polu wyszukiwania na stronie
+            
             const selectedDate = info.date.toISOString().split('T')[0]; // Format daty YYYY-MM-DD
 
-            // Ustaw wartość w polu date-search-bar
+            
             const dateSearchBar = document.getElementById('date-search-bar');
             if (dateSearchBar) {
                 dateSearchBar.value = selectedDate;
 
-                // Wywołaj istniejące zdarzenie `input`, aby przefiltrować zadania
+                
                 const inputEvent = new Event('input', { bubbles: true, cancelable: true });
                 dateSearchBar.dispatchEvent(inputEvent);
             }
 
-            // Przewiń do sekcji "my tasks"
+          
             const myTasksSection = document.getElementById('recently-added');
             if (myTasksSection) {
-                myTasksSection.scrollIntoView({ behavior: 'smooth' }); // Płynne przewijanie do sekcji
+                myTasksSection.scrollIntoView({ behavior: 'smooth' }); 
             }
 
-            // Zwróć false, aby zapobiec domyślnemu zachowaniu FullCalendar
+            
             return false;
         },
         dateClick: function(info) {
-            openAddTaskForm(info.dateStr); // Otwórz formularz z wybraną datą
+            openAddTaskForm(info.dateStr); 
         }
     });
 
@@ -501,23 +501,22 @@ let calendar;
         function openAddTaskForm(selectedDate) {
     const taskForm = document.getElementById('task-form');
 
-    taskForm.reset(); // Wyczyść formularz
-    document.getElementById('due_date').value = selectedDate; // Ustaw wybraną datę
+    taskForm.reset(); 
+    document.getElementById('due_date').value = selectedDate; 
 
-    // Przewiń stronę na samą górę
+   
     window.scrollTo({
         top: 0,
-        behavior: 'smooth' // Płynne przewijanie
+        behavior: 'smooth' 
     });
 
-    // Dodaj animację do sekcji dodawania zadań
-    const formCard = taskForm.closest('.card'); // Znajdź kontener karty formularza
+    const formCard = taskForm.closest('.card'); 
     formCard.classList.add('task-form-animate');
 
-    // Usuń klasę animacji po zakończeniu
+    
     setTimeout(() => {
         formCard.classList.remove('task-form-animate');
-    }, 800); // Czas trwania animacji zgodny z czasem w CSS (0.8s)
+    }, 800); 
 }
 
 
