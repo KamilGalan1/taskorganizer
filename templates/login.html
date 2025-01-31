@@ -38,7 +38,7 @@
         body {
             height: 100vh;
             margin: 0;
-            background: #121212; /* Ciemnoszare tło */
+            background: #121212;
             color: #fff;
             font-family: 'Roboto', sans-serif;
             display: flex;
@@ -88,7 +88,7 @@
         .submit-btn {
             width: 100%;
             padding: 10px;
-            background: #bb86fc; /* Kolor przycisku dopasowany do index.html */
+            background: #bb86fc;
             border: none;
             color: #fff;
             font-size: 1.2rem;
@@ -199,7 +199,6 @@
         {{ form.submit(class="btn btn-primary w-100") }}
     </div>
 </form>
-    <!-- Wyświetlenie komunikatu o błędzie -->
         {% if error %}
             <div class="error">{{ error }}</div>
         {% endif %}

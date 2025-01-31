@@ -507,31 +507,31 @@ body {
 /* USER INFO STYLE                */
 /* -------------------------------- */
 .user-info-container {
-    background-color: #2e2e2e; /* Ciemnoszare tło */
-    padding: 10px 15px; /* Wewnętrzne odstępy */
-    border-radius: 8px; /* Zaokrąglone rogi */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Subtelny cień */
+    background-color: #2e2e2e;
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     display: inline-block;
     position: fixed;
-    top: 10px; /* Odległość od góry */
-    right: 10px; /* Odległość od prawej */
-    z-index: 1000; /* Na wierzchu innych elementów */
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
 }
 
 .user-info-text {
-    color: #ffffff; /* Jasny tekst */
-    font-size: 1rem; /* Rozmiar tekstu */
-    font-weight: 500; /* Półgruby tekst */
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 500;
     display: flex;
-    align-items: center; /* Wyrównanie w pionie */
-    gap: 10px; /* Odstęp między ikoną a tekstem */
-    font-family: 'Roboto', sans-serif; /* Elegancka czcionka */
+    align-items: center;
+    gap: 10px;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* User icon */
 .user-info-text i {
-    font-size: 1.5rem; /* Większa ikona */
-    color: #bb86fc; /* Fioletowy kolor */
+    font-size: 1.5rem;
+    color: #bb86fc;
 }
 
 
@@ -572,5 +572,5 @@ body {
 }
 
 .bg-warning {
-    background-color: #ffeeba !important; /* Jasnożółty kolor */
+    background-color: #ffeeba !important;
 }
